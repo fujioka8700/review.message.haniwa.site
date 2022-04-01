@@ -14,4 +14,15 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //
-    ]);
+    ])
+    .browserSync({
+        proxy: {
+            target: 'http://localhost',
+        },
+        files: [
+            './resources/**/*',
+            './public/**/*',
+        ],
+        open: false,
+        reloadOnRestart: true,
+    });
