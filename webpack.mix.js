@@ -17,7 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
     ])
     .browserSync({
         proxy: {
-            target: 'http://localhost',
+            target: 'http://review.message.haniwa.site/',
         },
         files: [
             './resources/**/*',
