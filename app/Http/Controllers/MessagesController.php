@@ -38,16 +38,22 @@ class MessagesController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'category_id' => 'required',
-            'title' => 'required',
-            'body' => 'required'
+            'category_id' => 'required|integer|between:1,5',
+            'title' => 'required|string|max:50',
+            'body' => 'required|string|max:50'
         ]);
 
         if ($validator->fails()) {
             return redirect('/messages/create')->withErrors($validator)->withInput();
         }
 
-        echo $request->category_id . $request->title . $request->body;
+        $message = new Message;
+        $message->category_id = $request->category_id;
+        $message->title = $request->title;
+        $message->body = $request->body;
+        $message->save();
+
+        return redirect('messages');
     }
 
     /**
@@ -69,7 +75,7 @@ class MessagesController extends Controller
      */
     public function edit(Message $message)
     {
-        echo $message->id;
+        return view('message.edit', compact('message'));
     }
 
     /**
@@ -81,7 +87,18 @@ class MessagesController extends Controller
      */
     public function update(Request $request, Message $message)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|integer|between:1,5',
+            'title' => 'required|string|max:50',
+            'body' => 'required|string|max:50'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect("/messages/{$message->id}/edit")->withErrors($validator)->withInput();
+        }
+
+        $message->fill($request->except(['_token', '_method']))->save();
+        return redirect('messages');
     }
 
     /**
@@ -92,6 +109,7 @@ class MessagesController extends Controller
      */
     public function destroy(Message $message)
     {
-        echo '削除';
+        $message->delete();
+        return redirect()->route('messages.index');
     }
 }

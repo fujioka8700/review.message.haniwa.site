@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <a href="{{url('messages')}}">戻る</a>
+    <a href="{{url()->previous()}}">戻る</a>
     <table border="1">
         <tr>
             <th>ID</th>
