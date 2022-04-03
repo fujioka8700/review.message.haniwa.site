@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MessagesController extends Controller
 {
@@ -25,7 +26,7 @@ class MessagesController extends Controller
      */
     public function create()
     {
-        echo 'create';
+        return view('message.create');
     }
 
     /**
@@ -36,7 +37,17 @@ class MessagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required',
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/messages/create')->withErrors($validator)->withInput();
+        }
+
+        echo $request->category_id . $request->title . $request->body;
     }
 
     /**
@@ -47,7 +58,7 @@ class MessagesController extends Controller
      */
     public function show(Message $message)
     {
-        echo $message->id;
+        return view('message.show', compact('message'));
     }
 
     /**
