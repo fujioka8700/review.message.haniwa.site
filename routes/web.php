@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Message;
+use App\Http\Controllers\MessagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/tutorial/index', function () {
-    $str = 'tutorial<br>index';
-    $ary = ['tutorial10','tutorial20','tutorial30'];
-    $number = 10;
-    // $data = ['str'=>$str,'ary'=>$ary];
-    return view('tutorial.index', compact('str', 'ary', 'number'));
-});
+Route::resource('messages', MessagesController::class);
