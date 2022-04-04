@@ -13,7 +13,7 @@
         </tr>
         <tr>
             <th>カテゴリー</th>
-            <td>{{$message->category_id}}</td>
+            <td>{{$message->category->name}}</td>
         </tr>
         <tr>
             <th>ユーザー</th>

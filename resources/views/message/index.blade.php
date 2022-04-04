@@ -13,7 +13,7 @@
         @forelse ($messages as $message)
         <tr>
             <td>{{$message->id}}</td>
-            <td>{{$message->category_id}}</td>
+            <td>{{$message->category->name}}</td>
             <td><a href="{{url("/messages/{$message->id}")}}">{{$message->title}}</a></td>
             <td>{{$message->user_id}}</td>
             <td><a href="{{url("/messages/{$message->id}/edit")}}">編集</a></td>
