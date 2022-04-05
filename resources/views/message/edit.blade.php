@@ -15,7 +15,7 @@
         @csrf
         @method('PATCH')
         ID:{{$message->id}}<br>
-        ユーザー:{{$message->user_id}}<br>
+        ユーザー:{{$message->user->name}}<br>
         カテゴリー:
         <select name="category_id" id="">
             @foreach ($categories as $category)

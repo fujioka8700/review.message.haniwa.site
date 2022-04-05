@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <th>ユーザー</th>
-            <td>{{$message->user_id}}</td>
+            <td>{{$message->user->name}}</td>
         </tr>
         <tr>
             <th>タイトル</th>

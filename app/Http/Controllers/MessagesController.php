@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class MessagesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -50,6 +56,7 @@ class MessagesController extends Controller
         }
 
         $message = new Message;
+        $message->user_id = Auth::id();
         $message->category_id = $request->category_id;
         $message->title = $request->title;
         $message->body = $request->body;
