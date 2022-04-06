@@ -23,5 +23,6 @@ mix.js('resources/js/app.js', 'public/js')
             './public/**/*',
         ],
         open: false,
+        notify: false,
         reloadOnRestart: true,
     });

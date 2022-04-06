@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Models\Category;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class MessagesController extends Controller
@@ -107,6 +107,11 @@ class MessagesController extends Controller
             return redirect("/messages/{$message->id}/edit")->withErrors($validator)->withInput();
         }
 
+        if ($message->user_id !== Auth::id()) {
+            $validator->errors()->add('filed', '編集できません');
+            return redirect()->route('messages.edit', ['message' => $message])->withErrors($validator);
+        }
+
         $message->fill($request->except(['_token', '_method']))->save();
         return redirect('messages');
     }
@@ -119,7 +124,14 @@ class MessagesController extends Controller
      */
     public function destroy(Message $message)
     {
-        $message->delete();
-        return redirect()->route('messages.index');
+        $validator = Validator::make(array(),array());
+
+        if ($message->user_id === Auth::id()) {
+            $message->delete();
+        } else {
+            $validator->errors()->add('filed', '削除できません');
+        }
+
+        return redirect()->route('messages.index')->withErrors($validator);
     }
 }
